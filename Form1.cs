@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -158,7 +159,7 @@ namespace hlm2localization_editor
                 {
                     LocData.Languages[j].Strings[i] = dataGridView1.Rows[i].Cells[j].Value.ToString();
 
-                    if (LocData.Languages[j].Strings[i][LocData.Languages[j].Strings[i].Length - 1] != '\0') 
+                    if (LocData.Languages[j].Strings[i][LocData.Languages[j].Strings[i].Length - 1] != '\0')
                     {
                         LocData.Languages[j].Strings[i] += '\0';
                     }
@@ -175,11 +176,12 @@ namespace hlm2localization_editor
             if (stream != null)
             {
                 saveStream = stream;
-            } else
+            }
+            else
             {
                 saveStream = File.Open(LocFile, FileMode.Create);
             }
-            
+
             {
                 using (var writer = new BinaryWriter(saveStream))
                 {
@@ -213,7 +215,7 @@ namespace hlm2localization_editor
                         {
                             byte[] utf16Bytes = Encoding.Unicode.GetBytes(Lang.Strings[j]);
                             byte[] utf8Bytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, utf16Bytes);
-                            for (int b = 0; b < utf8Bytes.Length; b++) 
+                            for (int b = 0; b < utf8Bytes.Length; b++)
                             {
                                 writer.Write(utf8Bytes[b]);
                             }
@@ -224,7 +226,12 @@ namespace hlm2localization_editor
             }
             saveStream.Close();
             //stream.Close();
-            MessageBox.Show("sUCCESS!", "File Saved!", MessageBoxButtons.OK);
+            MessageBox.Show("File Saved!", "Success!", MessageBoxButtons.OK);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new ProcessStartInfo("https://github.com/MaximScherbinin/hlm2localization-editor/") { UseShellExecute = true });
         }
     }
 }
