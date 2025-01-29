@@ -48,7 +48,7 @@ namespace hlm2localization_editor
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //Get the path of specified file
-                filePath = openFileDialog.FileName;
+                filePath = openFileDialog.FileName; 
                 LocFile = openFileDialog.FileName;
 
                 //Read the contents of the file into a stream
@@ -157,6 +157,10 @@ namespace hlm2localization_editor
             {
                 for (int j = 0; j < LocData.LangCount; j++)
                 {
+                    if (dataGridView1.Rows[i].Cells[j].Value == null)
+                    {
+                        dataGridView1.Rows[i].Cells[j].Value = "\0";
+                    }
                     LocData.Languages[j].Strings[i] = dataGridView1.Rows[i].Cells[j].Value.ToString();
 
                     if (LocData.Languages[j].Strings[i][LocData.Languages[j].Strings[i].Length - 1] != '\0')
